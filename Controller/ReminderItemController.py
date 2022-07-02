@@ -146,7 +146,10 @@ from Controller.DetailController import *
 import time
 
 class ReminderItemController(QWidget):
-    def __init__(self,parent=None,id=0,title="",rtime=0,f="Home"):
+    '''
+    List中单个备忘录Widget视图
+    '''
+    def __init__(self,parent=None,id=0,title="",rtime=0,fr="Home"):
         super().__init__(parent=parent)
         self.ui=Ui_ReminderItem()
         self.ui.setupUi(self)
@@ -155,12 +158,12 @@ class ReminderItemController(QWidget):
         self.rtime=time.strftime("%Y-%m-%d %X",time.localtime(rtime))
         self.ui.titleLabel.setText(self.title)
         self.ui.timeLabel.setText(self.rtime)
-        self.f=f
+        self.fr=fr
         with open("Resources/qss/ReminderItem.qss") as file:
             self.setStyleSheet(file.read())
 
     def toEdit(self):
-        self.edit=EditController(id=self.id,f=self.f)
+        self.edit=EditController(id=self.id,fr=self.fr)
         self.edit.show()
 
     def mouseDoubleClickEvent(self, event):

@@ -143,7 +143,7 @@ from PySide6.QtMultimedia import *
 from qt_material import *
 from View.DetailView import Ui_Detail
 import time
-from Model.Reminder import Data
+from Model.Reminder import Reminder
 
 class DetailController(QWidget):
     def __init__(self,id,isAlarm=False):
@@ -155,6 +155,8 @@ class DetailController(QWidget):
         with open("Resources/qss/Detail.qss") as file:
             self.setStyleSheet(file.read())
         self.setupContent(id)
+
+        #判断是否是提醒器弹出的窗口，如果是则播放音乐并隐藏右上角关闭键
         self.isAlarm=isAlarm
         if self.isAlarm:
             self.ui.closeBtn.hide()
@@ -179,11 +181,16 @@ class DetailController(QWidget):
         return QWidget().mouseMoveEvent(event)
 
     def setupContent(self, id):
+        '''
+        初始化内容
+        :param id:
+        :return:
+        '''
         self.id = id
-        db=Data()
-        data = db.getReminder(id)
-        title, rtime, remind, content = data[1], data[2], data[3], data[4]
-        db.close()
+        r=Reminder(id=self.id)
+        r.getReminder()
+        title, rtime, remind, content = r.title, r.rtime, r.remind, r.content
+        r.close()
         self.setWindowTitle(title)
         self.ui.reminderDetail.setText(title)
         self.ui.Title2.setText(title)
@@ -193,6 +200,11 @@ class DetailController(QWidget):
         return 0
 
     def closeDetail(self):
+        '''
+        槽函数
+        如果是提醒器弹出的窗口则在关闭时关掉铃声
+        :return:
+        '''
         if self.isAlarm:
             self.effect.stop()
         self.close()

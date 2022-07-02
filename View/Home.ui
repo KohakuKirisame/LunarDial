@@ -855,7 +855,7 @@
      </url>
     </property>
     <property name="zoomFactor">
-     <double>0.850000000000000</double>
+     <double>0.885000000000000</double>
     </property>
    </widget>
    <widget class="QLabel" name="todayDate">

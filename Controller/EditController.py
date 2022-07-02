@@ -142,10 +142,10 @@ from PySide6.QtCore import *
 from qt_material import *
 from View.EditView import Ui_Edit
 import Home
-from Model.Reminder import Data
+from Model.Reminder import Reminder
 
 class EditController(QWidget):
-    def __init__(self,parent=None,id=0,f="Home"):
+    def __init__(self,parent=None,id=0,fr="Home"):
         super().__init__(parent=parent)
         self.ui=Ui_Edit()
         self.ui.setupUi(self)
@@ -154,7 +154,7 @@ class EditController(QWidget):
         with open("Resources/qss/Edit.qss") as file:
             self.setStyleSheet(file.read())
         self.setupContent(id)
-        self.f=f
+        self.fr=fr  #判断是从主页进入还是从单日视图进入
 
     def mousePressEvent(self, event):
         self.isPressed = True
@@ -172,19 +172,28 @@ class EditController(QWidget):
             self.move(self.pos() + movePos)
         return QWidget().mouseMoveEvent(event)
 
-    def setupContent(self,id):
+    def setupContent(self,id=0):
+        '''
+        初始化编辑窗口的内容
+        如果id=0则为新建备忘录
+        如果id!=0则为编辑，从数据库取得备忘录内容并填入
+        :param id:
+        :return:
+        '''
         if id==0:
             self.id=0
             self.setWindowTitle(u"新建备忘录")
             self.ui.reminderDetail.setText(u"新建备忘录")
             self.ui.delBtn.hide()
+            self.ui.timeEdit.setDateTime(QDateTime().currentDateTime())
+            self.ui.remindEdit.setDateTime(QDateTime().currentDateTime())
             return 0
         else:
             self.id=id
-            db=Data()
-            data=db.getReminder(self.id)
-            title,time,remind,content=data[1],data[2],data[3],data[4]
-            db.close()
+            r=Reminder(id=self.id)
+            r.getReminder()
+            title,time,remind,content=r.title, r.rtime, r.remind, r.content
+            r.close()
             self.setWindowTitle(title)
             self.ui.reminderDetail.setText(title)
             self.ui.titleEdit.setText(title)
@@ -194,26 +203,36 @@ class EditController(QWidget):
             return 0
 
     def saveReminder(self):
+        '''
+        保存备忘录
+        保存完后刷新主页的列表，如果是从单日视图进入的则再更新单日视图的列表
+        :return:
+        '''
         title=self.ui.titleEdit.text()
         time=self.ui.timeEdit.dateTime().toSecsSinceEpoch()
         remind=self.ui.remindEdit.dateTime().toSecsSinceEpoch()
         content=self.ui.contentEdit.toPlainText()
-        db=Data()
         if self.id==0:
-            db.newReminder(title,time,remind,content)
+            r=Reminder(title=title,rtime=time,remind=remind,content=content)
+            r.newReminder()
         else:
-            db.editReminder(self.id,title,time,remind,content)
-        db.close()
+            r=Reminder(self.id,title,time,remind,content)
+            r.editReminder()
+        r.close()
         Home.home.updateList()
-        if self.f=="Day":
+        if self.fr=="Day":
             Home.home.dayview.updateList()
         self.close()
 
     def delReminder(self):
-        db=Data()
-        db.delReminder(self.id)
-        db.close()
+        '''
+        删除备忘录
+        :return:
+        '''
+        r=Reminder(id=self.id)
+        r.delReminder()
+        r.close()
         Home.home.updateList()
-        if self.f=="Day":
+        if self.fr=="Day":
             Home.home.dayview.updateList()
         self.close()

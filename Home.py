@@ -138,5 +138,10 @@
 #                                        0L1uYCLpCzzJYLCc+cbX                                 (zJJYYYYYccJUUUYvYJJJUzXUJn)cC{
 from Controller.HomeController import *
 def init():
+    '''
+    在main.py中能初始化HomeController
+    其作用是让所有文件可以调用已被实例化的HomeController中的方法
+    :return:
+    '''
     global home
     home=HomeController()

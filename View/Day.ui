@@ -199,5 +199,25 @@
  <resources>
   <include location="../Resources/resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>addReminder</sender>
+   <signal>clicked()</signal>
+   <receiver>Day</receiver>
+   <slot>addReminder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>619</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addReminder()</slot>
+ </slots>
 </ui>

@@ -259,14 +259,14 @@
      <hour>23</hour>
      <minute>59</minute>
      <second>59</second>
-     <year>2099</year>
+     <year>2199</year>
      <month>12</month>
      <day>31</day>
     </datetime>
    </property>
    <property name="minimumDateTime">
     <datetime>
-     <hour>0</hour>
+     <hour>8</hour>
      <minute>0</minute>
      <second>0</second>
      <year>1970</year>
@@ -292,6 +292,26 @@
    </property>
    <property name="contextMenuPolicy">
     <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="maximumDateTime">
+    <datetime>
+     <hour>23</hour>
+     <minute>59</minute>
+     <second>59</second>
+     <year>2199</year>
+     <month>12</month>
+     <day>31</day>
+    </datetime>
+   </property>
+   <property name="minimumDateTime">
+    <datetime>
+     <hour>8</hour>
+     <minute>0</minute>
+     <second>0</second>
+     <year>1970</year>
+     <month>1</month>
+     <day>1</day>
+    </datetime>
    </property>
    <property name="displayFormat">
     <string>yyyy-MM-dd HH:mm:ss</string>

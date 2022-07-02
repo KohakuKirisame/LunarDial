@@ -143,6 +143,9 @@ from qt_material import *
 from View.AboutView import Ui_About
 
 class AboutController(QWidget):
+    '''
+    静态窗口，没得写
+    '''
     def __init__(self):
         super().__init__()
         self.ui = Ui_About()

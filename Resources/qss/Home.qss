@@ -17,7 +17,11 @@ border:2px solid #458bff;
 #BG{
 border-image: url(:/res/img/bg.png);
 }
-#pushButton,#todayDate,#backToday,#calYear,#calDate{
+#pushButton,#todayDate,#backToday{
 font-family:"Microsoft YaHei";
 font-size:12px;
+}
+#calYear,#calMonth{
+font-family:"Microsoft YaHei";
+font-size:14px;
 }

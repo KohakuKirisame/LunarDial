@@ -139,37 +139,55 @@
 import time
 import sqlite3 as db
 
-class Data:
-    def __init__(self):
+class Reminder:
+    '''
+    我觉得这个模型类的方法名可读性太高了，注释我就不写了
+    '''
+    def __init__(self,id=0,title="",rtime=0,remind=0,content="",date=None):
+        self.id=id
+        self.title=title
+        self.rtime=rtime
+        self.remind=remind
+        self.content=content
+        self.date=date
         self.con=db.connect("Data/data.db")
         self.cur=self.con.cursor()
 
     def getAllReminders(self):
         now = int(time.time())
-        self.cur.execute("SELECT * FROM `reminders` WHERE time>=%d ORDER BY time;" %now)
+        self.cur.execute("SELECT * FROM `reminders` ORDER BY time;")
         return self.cur.fetchall()
 
-    def getReminder(self,id):
-        self.cur.execute("SELECT * FROM `reminders` WHERE id=%d;" % id)
-        return self.cur.fetchone()
+    def getReminder(self):
+        self.cur.execute("SELECT * FROM `reminders` WHERE id=%d;" % self.id)
+        data=self.cur.fetchone()
+        self.title=data[1]
+        self.rtime=data[2]
+        self.remind=data[3]
+        self.content=data[4]
+        return data
 
-    def newReminder(self,title,rtime,remind,content):
-        self.cur.execute("INSERT INTO `reminders` (title,time, remind, content) VALUES ('%s',%d,%d,'%s');" %(title,rtime,remind,content))
+    def newReminder(self):
+        self.cur.execute("INSERT INTO `reminders` (title,time, remind, content) VALUES ('%s',%d,%d,'%s');" %(self.title,self.rtime,self.remind,self.content))
         self.con.commit()
         return True
 
-    def editReminder(self,id,title,rtime,remind,content):
-        self.cur.execute("UPDATE `reminders` SET title='%s',time='%d',remind='%d',content='%s' WHERE id=%d;" %(title, rtime, remind, content,id))
+    def editReminder(self):
+        self.cur.execute("UPDATE `reminders` SET title='%s',time='%d',remind='%d',content='%s' WHERE id=%d;" %(self.title, self.rtime, self.remind, self.content,self.id))
         self.con.commit()
         return True
 
-    def delReminder(self,id):
-        self.cur.execute("DELETE FROM `reminders` WHERE id=%d" % id)
+    def delReminder(self):
+        self.cur.execute("DELETE FROM `reminders` WHERE id=%d" % self.id)
         self.con.commit()
+        return True
 
-    def getRemindersByDate(self,date):
-        start=int(time.mktime(time.strptime("%04d-%02d-%02d 00:00:00" %(date[0],date[1],date[2]),"%Y-%m-%d %H:%M:%S")))
-        end=int(time.mktime(time.strptime("%04d-%02d-%02d 23:59:59" %(date[0],date[1],date[2]),"%Y-%m-%d %H:%M:%S")))
+    def getRemindersByDate(self):
+        if self.date==(1970,1,1):
+            start = int(time.mktime(time.strptime("%04d-%02d-%02d 08:00:00" % (self.date[0], self.date[1], self.date[2]),"%Y-%m-%d %H:%M:%S")))
+        else:
+            start=int(time.mktime(time.strptime("%04d-%02d-%02d 00:00:00" %(self.date[0],self.date[1],self.date[2]),"%Y-%m-%d %H:%M:%S")))
+        end=int(time.mktime(time.strptime("%04d-%02d-%02d 23:59:59" %(self.date[0],self.date[1],self.date[2]),"%Y-%m-%d %H:%M:%S")))
         self.cur.execute("SELECT * FROM `reminders` WHERE time>=%d AND time<=%d ORDER BY time;" %(start,end))
         return self.cur.fetchall()
 

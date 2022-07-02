@@ -146,30 +146,42 @@ from Controller.AboutController import *
 from Controller.EditController import *
 from Controller.ReminderItemController import *
 from Controller.DayController import *
-from Model.Reminder import Data
+from Model.Reminder import Reminder
 from lunar_python import *
 
 class HomeController(QMainWindow):
     def __init__(self):
+        '''
+        初始化HomeController
+        '''
         super().__init__()
         self.ui = Ui_Home()
         self.ui.setupUi(self)
-        self.setWindowFlag(Qt.FramelessWindowHint)
-        self.setContentsMargins(0, 0, 0, 0)
+        self.setWindowFlag(Qt.FramelessWindowHint)  #设置为无边框窗口
+        self.setContentsMargins(0, 0, 0, 0)  #取消内容的Margins
+
+        #读取Style Sheet
         with open("Resources/qss/Home.qss") as file:
             self.setStyleSheet(file.read())
-        self.updateTime()
+
+        self.updateTime()  #更新时间显示
+
+        #设置定时器，每250ms刷新当前时间并显示
         self.timer=QTimer()
         self.timer.setInterval(250)
         self.timer.timeout.connect(self.updateTime)
         self.timer.start()
-        self.updateList()
+
+        self.updateList()  #刷新备忘录列表
+
+        #显示当前日期
         self.today=QDate().currentDate()
         self.loc=QLocale()
         self.ui.todayDate.setText(self.loc.toString(self.today,"yyyy年M月d日\ndddd"))
-        self.calDate=self.today
-        self.updateCalendar(0)
+        self.calDate=self.today  #初始化日历月份为当日同月
+        self.updateCalendar(0)  #刷新日历为本月
 
+    #重写下面三个方法实现窗口自由拖动
     def mousePressEvent(self, event):
         self.isPressed = True
         self.startPos = event.globalPos()
@@ -187,35 +199,57 @@ class HomeController(QMainWindow):
         return QWidget().mouseMoveEvent(event)
 
     def toAbout(self):
+        '''
+        槽函数，展示关于页面
+        :return:
+        '''
         self.About=AboutController()
         self.About.show()
 
     def updateTime(self):
+        '''
+        刷新当前时间并显示在LCD上
+        :return:
+        '''
         self.ui.nowTimeH.display(time.strftime("%H",time.localtime()))
         self.ui.nowTimeM.display(time.strftime("%M",time.localtime()))
         self.ui.nowTimeS.display(time.strftime("%S",time.localtime()))
 
     def toAddReminder(self):
+        '''
+        槽函数，打开新建备忘录窗口
+        :return:
+        '''
         self.addReminder=EditController()
         self.addReminder.show()
 
     def updateList(self):
+        '''
+        刷新备忘录列表并显示
+        :return:
+        '''
         self.ui.Reminders.clear()
-        db=Data()
-        datas = db.getAllReminders()
+        db=Reminder()
+        datas = db.getAllReminders()  #用Reminder模型获取数据库中的所有备忘录，下同
         for data in datas:
             id,title,rtime= data[0],data[1], data[2]
-            w=ReminderItemController(id=id,title=title,rtime=rtime)
+            w=ReminderItemController(id=id,title=title,rtime=rtime)  #初始化单个备忘录的Widget
             item=QListWidgetItem()
             item.setSizeHint(QSize(310,64))
             w.resize(QSize(310,64))
             self.ui.Reminders.addItem(item)
-            self.ui.Reminders.setItemWidget(item,w)
-        db.close()
-        self.getNearestAlarm()
-        self.setupAlarm()
+            self.ui.Reminders.setItemWidget(item,w)  #将备忘录的Widget加载到ListWidget中的单个item上
+        db.close()  #不要忘记关上数据库连接！
+        self.getNearestAlarm()  #每次备忘录发生变动立刻重置提醒器
+        self.setupAlarm()  #每次备忘录发生变动立刻重置提醒器
 
     def getDayLine2(self,date):
+        '''
+        获取每个日期中第二行的内容
+        优先级为：阳历节日>阴历节日>节气>阴历日期
+        :param date:
+        :return:
+        '''
         solar=Solar.fromYmd(date[0],date[1],date[2])
         lunar=solar.getLunar()
         fes=solar.getFestivals()
@@ -223,10 +257,10 @@ class HomeController(QMainWindow):
         lunarFes=lunar.getFestivals()
         if fes!=[] and len(fes[0])<=4:
             Line2=fes[0]
-        elif jieqi!="":
-            Line2=jieqi
         elif lunarFes!=[]:
             Line2=lunarFes[0]
+        elif jieqi!="":
+            Line2=jieqi
         else:
             Line2=lunar.getDayInChinese()
             if Line2=="初一":
@@ -234,6 +268,22 @@ class HomeController(QMainWindow):
         return Line2
 
     def updateCalendar(self,type=0):
+        '''
+        核心部分：更新日历视图
+        type参数为：
+            - -2：上一年
+            - -1：上一月
+            - 0：回到本月
+            - 1：下一月
+            - 2：下一年
+        在Unix时间戳限制下，允许访问1970年~2199年
+        设置一个长度为35的列表，通过QDate库得到每月1日的星期，将日期按正确的顺序填入这个列表
+        分别通过getDayLine2方法获取每一个日期第二行内容并添加进列表
+        按照c_11到c_57的顺序将c_ij填满，其中i为行，j为列（星期）
+        最后设置日期上部标签显示当前显示的月份
+        :param type:
+        :return:
+        '''
         if type==0:
             self.calDate=QDate(self.today.year(),self.today.month(),1)
         elif type==-2:
@@ -279,6 +329,7 @@ class HomeController(QMainWindow):
         self.ui.calYear.setText(self.calDate.toString("yyyy年"))
         self.ui.calMonth.setText(self.calDate.toString("M月"))
 
+    #5个槽函数
     def backToToday(self):
         self.updateCalendar(0)
     def nextMonth(self):
@@ -291,11 +342,20 @@ class HomeController(QMainWindow):
         self.updateCalendar(-2)
 
     def toDayView(self,date):
+        '''
+        槽函数，双击单日，打开单日列表
+        :param date:
+        :return:
+        '''
         self.dayview=DayController(date)
         self.dayview.show()
 
     def getNearestAlarm(self):
-        db = Data()
+        '''
+        获取提醒时间最近的一项备忘录
+        :return:
+        '''
+        db = Reminder()
         self.nearestReminder = db.getNearest()
         db.close()
         if self.nearestReminder != None:
@@ -303,6 +363,11 @@ class HomeController(QMainWindow):
             self.nearestReminderTime = self.nearestReminder[3]
 
     def alarmOn(self):
+        '''
+        到达时间，弹出提醒窗口并播放铃声
+        同时关闭计时器并立即查询设置下一个提醒器
+        :return:
+        '''
         if int(time.time())>=self.nearestReminderTime:
             self.alarmView=DetailController(id=self.nearestReminderID,isAlarm=True)
             self.alarm.stop()
@@ -311,8 +376,12 @@ class HomeController(QMainWindow):
             self.alarmView.show()
 
     def setupAlarm(self):
+        '''
+        设置提醒器，每950ms检测一次是否到达提醒的时间
+        :return:
+        '''
         if self.nearestReminder!=None:
             self.alarm=QTimer()
-            self.alarm.setInterval(900)
+            self.alarm.setInterval(950)
             self.alarm.timeout.connect(self.alarmOn)
             self.alarm.start()

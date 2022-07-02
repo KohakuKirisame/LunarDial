@@ -141,7 +141,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from qt_material import *
 from View.DayView import Ui_Day
-from Model.Reminder import Data
+from Model.Reminder import Reminder
 from Controller.ReminderItemController import *
 import time
 from lunar_python import *
@@ -156,7 +156,9 @@ class DayController(QWidget):
         self.setContentsMargins(0, 0, 0, 0)
         with open("Resources/qss/Day.qss") as file:
             self.setStyleSheet(file.read())
-        self.otherInfoText=""
+        self.otherInfoText=""  #初始化右侧的内容
+
+        #获取农历日期，节气，阳历阴历节日和纪念日信息并显示
         solar = Solar.fromYmd(date[0], date[1], date[2])
         lunar = solar.getLunar()
         fes = solar.getFestivals()
@@ -176,8 +178,10 @@ class DayController(QWidget):
             i="，".join(s for s in otherDays)
             self.otherInfoText+="\n%s" %i
         self.ui.otherInfo.setText(self.otherInfoText)
+
         self.ui.yearLabel.setText("%d年" %date[0])
         self.ui.dayTitle.setText("%d年%d月%d日" %(date[0],date[1],date[2]))
+        self.setWindowTitle("%d年%d月%d日" %(date[0],date[1],date[2]))
         self.ui.dayLabel.setText("%d月%d日" %(date[1],date[2]))
         self.updateList()
 
@@ -198,15 +202,27 @@ class DayController(QWidget):
         return QWidget().mouseMoveEvent(event)
 
     def updateList(self):
+        '''
+        更新备忘录列表
+        :return:
+        '''
         self.ui.Reminders.clear()
-        db=Data()
-        datas = db.getRemindersByDate(self.date)
+        r=Reminder(date=self.date)
+        datas = r.getRemindersByDate()
         for data in datas:
             id,title,rtime= data[0],data[1], data[2]
-            w=ReminderItemController(id=id,title=title,rtime=rtime,f="Day")
+            w=ReminderItemController(id=id,title=title,rtime=rtime,fr="Day")
             item=QListWidgetItem()
             item.setSizeHint(QSize(430,64))
             w.resize(QSize(430,64))
             self.ui.Reminders.addItem(item)
             self.ui.Reminders.setItemWidget(item,w)
-        db.close()
+        r.close()
+
+    def addReminder(self):
+        '''
+        打开新建备忘录窗口
+        :return:
+        '''
+        self.addReminderView = EditController(fr="Day")
+        self.addReminderView.show()

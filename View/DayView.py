@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'DayzWJzmC.ui'
+## Form generated from reading UI file 'DaysEPBIk.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.1
 ##
@@ -90,6 +90,7 @@ class Ui_Day(object):
         self.otherInfo.setWordWrap(True)
 
         self.retranslateUi(Day)
+        self.addReminder.clicked.connect(Day.addReminder)
 
         QMetaObject.connectSlotsByName(Day)
     # setupUi

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'EditRMJhKU.ui'
+## Form generated from reading UI file 'EditoErSvf.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.3.1
 ##
@@ -102,13 +102,15 @@ class Ui_Edit(object):
         self.timeEdit.setObjectName(u"timeEdit")
         self.timeEdit.setGeometry(QRect(90, 80, 251, 22))
         self.timeEdit.setContextMenuPolicy(Qt.NoContextMenu)
-        self.timeEdit.setMaximumDateTime(QDateTime(QDate(2099, 12, 31), QTime(23, 59, 59)))
-        self.timeEdit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0)))
+        self.timeEdit.setMaximumDateTime(QDateTime(QDate(2199, 12, 31), QTime(23, 59, 59)))
+        self.timeEdit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(8, 0, 0)))
         self.timeEdit.setCalendarPopup(True)
         self.remindEdit = QDateTimeEdit(Edit)
         self.remindEdit.setObjectName(u"remindEdit")
         self.remindEdit.setGeometry(QRect(90, 110, 251, 22))
         self.remindEdit.setContextMenuPolicy(Qt.NoContextMenu)
+        self.remindEdit.setMaximumDateTime(QDateTime(QDate(2199, 12, 31), QTime(23, 59, 59)))
+        self.remindEdit.setMinimumDateTime(QDateTime(QDate(1970, 1, 1), QTime(8, 0, 0)))
         self.remindEdit.setCalendarPopup(True)
         self.contentEdit = QPlainTextEdit(Edit)
         self.contentEdit.setObjectName(u"contentEdit")
