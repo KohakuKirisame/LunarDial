@@ -1,4 +1,4 @@
- ![Logo]([Resources/img/Logo_light.png]#pic_center)
+ ![Logo](Resources/img/Logo_light.png#pic_center)
  # 月時計 \~LunarDial\~
  月時計 \~LunarDial\~ 日历软件
  本程序为北京航空航天大学21级致真书院大学计算机基础课程大作业第四题。
