@@ -29,6 +29,7 @@
 
 ##  :house_with_garden:  运行环境
 本程序由Python 3.10编写,暂未测试其它版本Python兼容性。
+
 采用了下列Libraries:
 
  - PySide6
