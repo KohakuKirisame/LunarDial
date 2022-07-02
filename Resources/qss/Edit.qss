@@ -5,3 +5,6 @@ font-size:14px;
 .QLineEdit{
 color:#FFFFFF;
 }
+#delBtn{
+color:rgb(240,0,0)
+}

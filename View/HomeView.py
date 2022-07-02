@@ -431,7 +431,7 @@ class Ui_Home(object):
         self.weather.setMaximumSize(QSize(181, 251))
         self.weather.setContextMenuPolicy(Qt.NoContextMenu)
         self.weather.setUrl(QUrl(u"qrc:/res/web/weather.html"))
-        self.weather.setZoomFactor(0.850000000000000)
+        self.weather.setZoomFactor(0.888000000000000)
         self.todayDate = QLabel(self.centralwidget)
         self.todayDate.setObjectName(u"todayDate")
         self.todayDate.setGeometry(QRect(400, 110, 121, 41))

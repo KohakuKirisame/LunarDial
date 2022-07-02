@@ -146,11 +146,11 @@ class Data:
 
     def getAllReminders(self):
         now = int(time.time())
-        self.cur.execute("SELECT * FROM `reminders` WHERE time>=%d;" %now)
+        self.cur.execute("SELECT * FROM `reminders` WHERE time>=%d ORDER BY time;" %now)
         return self.cur.fetchall()
 
     def getReminder(self,id):
-        self.cur.execute("SELECT * FROM `reminders` WHERE id=%d" % id)
+        self.cur.execute("SELECT * FROM `reminders` WHERE id=%d;" % id)
         return self.cur.fetchone()
 
     def newReminder(self,title,rtime,remind,content):
