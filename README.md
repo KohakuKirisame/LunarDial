@@ -1,6 +1,7 @@
  ![Logo](Resources/img/Logo_light.png#pic_center)
  # 月時計 \~LunarDial\~
  月時計 \~LunarDial\~ 日历软件
+ 
  本程序为北京航空航天大学21级致真书院大学计算机基础课程大作业第四题。
  
 -----
@@ -26,7 +27,7 @@
 
 -----
 
-## :fa-spin fa-cog: 运行环境
+##  :house_with_garden:  运行环境
 本程序由Python 3.10编写,暂未测试其它版本Python兼容性。
 采用了下列Libraries:
 
@@ -42,5 +43,5 @@
 
 -----
 
-## :fa-space-shuttle: 运行
+##  :collision:  运行
 不会有人不知道怎么Clone吧,不会吧?
