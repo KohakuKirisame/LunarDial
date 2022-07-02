@@ -36,6 +36,7 @@
  - PyInstaller(打包用)
  
 由于采用了PySide6,与PyQt5不兼容,因此与自带PyQt5的Anaconda环境不兼容,运行源码前需要将Conda环境卸载干净。
+
 程序需要的字体位于Font目录,需要在运行前安装,由于有部分字体不允许商用,请运行完本程序及时删除。
 
 ##  :collision:  运行
