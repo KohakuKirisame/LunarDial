@@ -4,8 +4,6 @@
  
  本程序为北京航空航天大学21级致真书院大学计算机基础课程大作业第四题。
  
------
-
 ## :straight_ruler: 基本要求
 > 1. 能够显示当前日期与时间(年月日时分秒),与系统时间或网络时间自动同步、自动更新。
 > 2. 具有一般日历的 GUI 界面与功能(可参考电脑、手机中的日历,例子如下图):
@@ -25,8 +23,6 @@
 > 5. 对于时间的显示,可以模拟 LCD 式电子时钟或传统时钟指针式表盘。
 > 6. 打包为.exe 可执行文件,添加合适的 icon。
 
------
-
 ##  :house_with_garden:  运行环境
 本程序由Python 3.10编写,暂未测试其它版本Python兼容性。
 
@@ -42,7 +38,15 @@
 由于采用了PySide6,与PyQt5不兼容,因此与自带PyQt5的Anaconda环境不兼容,运行源码前需要将Conda环境卸载干净。
 程序需要的字体位于Font目录,需要在运行前安装,由于有部分字体不允许商用,请运行完本程序及时删除。
 
------
-
 ##  :collision:  运行
 不会有人不知道怎么Clone吧,不会吧?
+
+## :art: 自定义
+ - /Resources/qss目录放置了全部的StyleSheet,可以根据需要修改。
+ - /Resources/alarm.wav为提醒铃声,可以根据需要修改。
+
+## © 著作权
+ - 本程序代码部分由KohakuCao本人编写,采用AGPLv3.0协议。
+ - 软件名“月時計”源自东方Project,其著作权归ZUN与上海アリス幻樂団所有。
+ - 背景图自[https://www.pixiv.net/artworks/72443860](https://www.pixiv.net/artworks/72443860)
+ - 默认铃声为《無意識に駆ける》,参见:[https://www.bilibili.com/video/BV1Du411i7K9](https://www.bilibili.com/video/BV1Du411i7K9)
