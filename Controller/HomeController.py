@@ -323,6 +323,8 @@ class HomeController(QMainWindow):
                     exec (r"self.ui.c" + str(i) + str(j) + r".date=("+str(year)+","+str(month)+","+days[t]+")")
                     Line2=self.getDayLine2((year,month,int(days[t])))
                     days[t]+="\n%s" %Line2
+                else:
+                    exec(r"self.ui.c" + str(i) + str(j) + r".date=(-1,-1,-1)")
                 eval(r"self.ui.c" + str(i) + str(j) + r".setText(days[t])")
                 eval(r"self.ui.c" + str(i) + str(j) + r".isToday()")
                 t+=1

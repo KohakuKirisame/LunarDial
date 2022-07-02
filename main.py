@@ -45,6 +45,7 @@ from qt_material import *
 import Home
 if __name__ == '__main__':
     sys.argv.append("--disable-web-security")  #关闭Web安全限制，以免无法调用本地Web文件
+    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)  #高清优化
     app = QApplication(sys.argv)
     Home.init()  #把HomeController实例化到Home.py
     apply_stylesheet(app, theme='dark_blue.xml')
