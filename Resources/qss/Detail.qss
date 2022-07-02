@@ -1,0 +1,4 @@
+.QLabel,.QPushButton{
+font-family:"Microsoft YaHei";
+font-size:14px;
+}

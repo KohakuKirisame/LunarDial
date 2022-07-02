@@ -1,0 +1,9 @@
+QLabel#Logo{
+font-family:"GLT-GonunneObsolete";
+font-size:24px;
+color:rgb(255,255,255);
+}
+QLabel#closeBtn{
+font-size:18px;
+color:rgb(255,255,255);
+}

@@ -1,0 +1,23 @@
+#timeSep1,#timeSep2{
+font-size:48px;
+}
+#c01,#c02,#c03,#c04,#c05,#c06,#c07{
+font-family:"STKaiti";
+font-size:18px;
+border-bottom:2px solid rgb(192,192,192);
+border-radius:0px;
+}
+dayLabel{
+font-family:"Microsoft YaHei";
+font-size:14px;
+}
+dayLabel:hover{
+border:2px solid #458bff;
+}
+#BG{
+border-image: url(:/res/img/bg.png);
+}
+#pushButton,#todayDate,#backToday,#calYear,#calDate{
+font-family:"Microsoft YaHei";
+font-size:12px;
+}

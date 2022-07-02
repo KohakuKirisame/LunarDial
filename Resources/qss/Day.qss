@@ -1,0 +1,12 @@
+.QLabel,.QPushButton{
+font-family:"Microsoft YaHei";
+font-size:14px;
+}
+QLabel#yearLabel{
+font-family:"zihun138hao-baranshoushu";
+font-size:24px;
+}
+QLabel#dayLabel{
+font-family:"zihun138hao-baranshoushu";
+font-size:64px;
+}

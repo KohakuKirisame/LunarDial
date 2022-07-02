@@ -1,0 +1,12 @@
+QPushButton#editBtn{
+font-family:"Microsoft YaHei";
+font-size:12px;
+}
+QLabel#titleLabel{
+font-family:"Microsoft YaHei";
+font-size:14px;
+}
+QLabel#timeLabel{
+font-family:"Microsoft YaHei";
+font-size:12px;
+}

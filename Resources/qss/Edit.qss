@@ -1,0 +1,7 @@
+.QLabel,.QPushButton,.QLineEdit,.QPlainTextEdit,.QDateTimeEdit{
+font-family:"Microsoft YaHei";
+font-size:14px;
+}
+.QLineEdit{
+color:#FFFFFF;
+}
